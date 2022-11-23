@@ -22,7 +22,7 @@ yargs.command({
 yargs.command({
   command: 'list',
   describe: 'Print all notes',
-  handler() {
+  async handler() {
     printNotes();
   },
 });
@@ -37,7 +37,7 @@ yargs.command({
       demandOption: true,
     },
   },
-  handler({ id }) {
+  async handler({ id }) {
     removeNote(id);
   },
 });
