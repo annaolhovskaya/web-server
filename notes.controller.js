@@ -38,8 +38,21 @@ async function printNotes() {
   notes.forEach((note) => console.log(chalk.blue(note.id, note.title)));
 }
 
+async function updateNotes(id, newTitle) {
+  const notes = await getNotes();
+  const currentNote = notes.filter((note) => note.id === id.toString());
+  const [currentNoteoBj] = currentNote;
+  currentNoteoBj.title = newTitle;
+  await fs.writeFile(notesPath, JSON.stringify([...notes, currentNoteoBj]));
+  console.log(
+    chalk.bgGreen(`Note with id ${id} was changed title to ${newTitle}`)
+  );
+}
+
 module.exports = {
   addNote,
   removeNote,
   printNotes,
+  getNotes,
+  updateNotes,
 };
