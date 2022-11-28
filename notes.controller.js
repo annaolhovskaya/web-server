@@ -40,10 +40,10 @@ async function printNotes() {
 
 async function updateNotes(id, newTitle) {
   const notes = await getNotes();
-  const currentNote = notes.filter((note) => note.id === id.toString());
-  const [currentNoteoBj] = currentNote;
-  currentNoteoBj.title = newTitle;
-  await fs.writeFile(notesPath, JSON.stringify([...notes, currentNoteoBj]));
+  const updateNotes = notes.map((note) =>
+    note.id === id.toString() ? { ...note, title: newTitle } : note
+  );
+  await fs.writeFile(notesPath, JSON.stringify(updateNotes));
   console.log(
     chalk.bgGreen(`Note with id ${id} was changed title to ${newTitle}`)
   );
